@@ -1,36 +1,23 @@
 function computerPlay (computerRoll = 3) {
-     let randomNum = Math.floor(Math.random() * computerRoll);
+     let randomNum = Math.floor(Math.random() * computerRoll); 
      (randomNum == 0) ? computerRoll = "rock" :
      (randomNum == 1) ? computerRoll = "scissors" :
      computerRoll = "paper";
      return computerRoll;
 } 
 
-
-function keepScore(roundOver, computerScore, playerScore) {
-    if (roundOver == "wins over") {
-        playerScore++ 
-        return playerScore;
-    } else if (roundOver == "loses to") {
-        computerScore++;
-        return computerScore;
-    }
-}
-function playRound(playerChoice, computerChoice) {
+function playRound(playerChoice, computerChoice) {  // Compare computer's and user's choices to declare a winner
     let roundOver = (playerChoice == computerChoice) ? "ties with" :
-    (playerChoice == "paper" && computerChoice == "rock") ? "wins over"  :
+    (playerChoice == "paper" && computerChoice == "rock") ||
+    (playerChoice == "scissors" && computerChoice == "paper") ||
     (playerChoice == "rock" && computerChoice == "scissors") ? "wins over"  :
-    (playerChoice == "scissors" && computerChoice == "rock") ? "loses to"  :
-    (playerChoice == "rock" && computerChoice == "paper") ? "loses to" :
-    (playerChoice == "scissors" && computerChoice == "paper") ?  "wins over" :
-    (playerChoice == "paper" && computerChoice == "scissors") ? "loses to" :
-    "Either rock, paper, or scissors was not entered";
+    "loses to";
     
     console.log(`${playerChoice} ${roundOver} ${computerChoice}`)
     return roundOver;
 }
 
-function game(playerScore = 0, computerScore = 0) {
+function game(playerScore = 0, computerScore = 0) { // Play a five round game keeping track of score
     for (i = 1; i <= 5; i++) {
         let roundWinner = playRound(
             prompt(`Round ${i}: Please type: Rock, Paper, or Scissors?`).toLowerCase(),

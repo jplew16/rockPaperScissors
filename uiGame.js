@@ -16,15 +16,25 @@ function playRound(playerChoice, computerChoice) {  // Compare computer's and us
    console.log(`${playerChoice} ${roundOver} ${computerChoice}`)
    return roundOver;
 }
+   function createButtons(idName) {
+      const playerButton = document.createElement('button');
+      playerButton.id = idName;
+      playerButton.textContent = idName;
+      playerButton.classList.toggle('buttons-play');
+      return playerButton;
+   }
+   buttonsContainer.append(createButtons('Rock'));
+   buttonsContainer.append(createButtons('Paper'));
+   buttonsContainer.append(createButtons('Scissors'));
 
-function game(playerScore = 0, computerScore = 0) { // Play a five round game keeping track of score
-    const buttons = document.querySelectorAll('button')
-    buttons.addEventListener('click', playRound(buttons.id))
+   const btns = document.querySelectorAll('button')
+   btns.forEach((button) => {
+   
+      button.addEventListener('click', playRound(buttonsContainer.id, computerPlay()));
 
+   })
        console.log(`Player Score : ${playerScore}
 Computer Score: ${computerScore}`)
-
-   }
    gameOver(playerScore, computerScore)
 
 

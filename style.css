@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#buttons {
+    margin: 10em auto;
+    display: inline-block;
+    width: 25%;
+    height: 15%;
+    text-align: center;
+}
+
+.buttons-play {
+    text-align: center;
+    display: inline-block;
+    width: 50%;
+    height: auto;
+    padding: 15px;
+    margin: 0 auto;
+
+}

@@ -7,31 +7,49 @@ function computerPlay (computerRoll = 3) {
 } 
 function keepScore (roundResults) {
    if (roundOutput.hasChildNodes()) {
-      if (roundResults[2] == 'wins over') {
-      let lastRoundScore = document.querySelector('p').lastElementChild.textContent;
-      let lastPlayerScoreIndex = lastRoundScore.charAt(14);
-      roundResults[4] = lastPlayerScoreIndex + 1;
-   } else if (roundResults[2] == 'loses to') {
-      roundResults[3] += 1;
-   } else {
+      let lastRoundScore = document.getElementById('gameResults').lastElementChild.textContent;
+      let lastPlayerScore = parseInt(lastRoundScore.charAt(14));
+      let lastComputerScore = parseInt(lastRoundScore.charAt(32));
 
-   } if (roundResults[2] == 'wins over') {
-      roundResults[4] += 1;
-   } else if (roundResults[2] == 'loses to') {
-      roundResults[3] += 1;
+      if (roundResults[2] == 'wins over') { // Get the last round score and give the player or computer a point
+      roundResults[4] = lastPlayerScore + 1;
+      roundResults[3] = lastComputerScore;
+   } 
+   else if (roundResults[2] == 'loses to') {
+      roundResults[4] = lastPlayerScore;
+      roundResults[3] = lastComputerScore + 1;
+   } 
+   else if (roundResults[2] == 'ties with') {
+      roundResults[4] = lastPlayerScore;
+      roundResults[3] = lastComputerScore;
    }
-}
+} else if (!roundOutput.hasChildNodes()) {  // For the first round give scores to corresponding winner if any
+      if (roundResults[2] == 'wins over') {
+         roundResults[4] += 1;
+      } else if (roundResults[2] == 'loses to') {
+         roundResults[3] += 1;
+      } else if (roundResults[2] == 'ties with') {
+         roundResults[3] = 0;
+         roundResults[4] = 0;
+      }
+   }
    showResults(roundResults);
 }
 
-function showResults(roundResults) {
+function showResults(roundResults) {  // Output the current score and you won, lost, or tied messages
       console.log(roundResults);
-      roundOutput.classList.add('content');
-      const currentRound = document.createElement('p');
-      let showTotalScore = 'Player Score: ' + roundResults[4] + ' Computer Score: ' + roundResults[3];
-      currentRound.textContent += `${roundResults[0]} ${roundResults[2]} ${roundResults[1]}`;
-      currentRound.textContent += showTotalScore;
-      roundOutput.appendChild(currentRound);
+      if (roundResults[3] + roundResults[4] == 5) {
+         gameOver(roundResults[4], roundResults[3])
+         return;
+      }
+      const currentRoundResult = document.createElement('p');
+      currentRoundResult.textContent += `${roundResults[0]} ${roundResults[2]} ${roundResults[1]}`;
+      roundOutput.appendChild(currentRoundResult);
+
+      const currentRoundScore = document.createElement('p');
+      let showTotalScore = `Player Score: ${roundResults[4]} Computer Score: ${roundResults[3]}`;
+      currentRoundScore.textContent += showTotalScore;
+      roundOutput.appendChild(currentRoundScore);
 }
 function playRound(playerChoice, computerChoice) {  // Compare computer's and user's choices to declare a winner
    let roundOver = (playerChoice == computerChoice) ? "ties with" :
@@ -44,8 +62,6 @@ function playRound(playerChoice, computerChoice) {  // Compare computer's and us
    function createButtons(idName) {
       const playerButton = document.createElement('button');
       playerButton.id = idName;
-      playerButton.dataset.playerScore = 0
-      playerButton.dataset.cpuScore = 0;
       playerButton.textContent = idName;
       playerButton.classList.toggle('buttons-play');
       return playerButton;
@@ -53,8 +69,6 @@ function playRound(playerChoice, computerChoice) {  // Compare computer's and us
    buttonsParent.append(createButtons('rock'));
    buttonsParent.append(createButtons('paper'));
    buttonsParent.append(createButtons('scissors'));
-   buttonsParent.setAttribute('data-player-score', 0);
-   buttonsParent.setAttribute('data-cpu-score', 0);
    let roundOutput = document.createElement('div');
    roundOutput.setAttribute('id', 'gameResults');
    document.body.appendChild(roundOutput);
@@ -67,13 +81,16 @@ function playRound(playerChoice, computerChoice) {  // Compare computer's and us
       button.addEventListener('click', sendChoice);
    });
 
-      console.log(`Player Score : ${playerScore}
-Computer Score: ${computerScore}`)
-   gameOver(playerScore, computerScore)
-
-
 function gameOver(playerScore, computerScore)  {
-   (playerScore > computerScore) ? console.log("Congratulations! You Win! :)") :
-   (playerScore < computerScore) ? console.log("You Lose! Nice Try!") :
-   console.log("Fair Game, It's a Tie!");
+   const fifthRound = document.createElement('h2');
+   if (playerScore < computerScore) {
+      fifthRound.textContent = 'You Lose :('
+   } else if (playerScore > computerScore) {
+      fifthRound.textContent = 'You Win :)'
+   }
+   let endScore = document.createElement('p');
+   endScore.textContent += `Final Scores: 
+   Player Score: ${playerScore} Computer Score: ${computerScore}`;
+   roundOutput.appendChild(fifthRound);
+   roundOutput.appendChild(endScore);
 }

@@ -34,28 +34,42 @@ main {
 .winner {
     background-color: burlywood;
     position: fixed;
+    z-index: 5;
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
     width: 500px;
+    max-width: 600px;
     height: 200px;
-    border-radius: 10%;
-    display: block;
+    border-radius: 15px;
+    text-align: center; /* Centered all children due to inheritence */
 }
 .winner h1 {
-    text-align: center;
-    padding: 40px 0;
+    padding: 35px 0;
+    border-bottom: purple 5px solid;
 }
 .winner h3 {
     padding: 0 80px;
+    padding-top: 5px;
     margin: 0 auto;
-    text-align: center;
 }
 .winner button {
     display: inline-block;
     width: 25%;
     height: 25%;
     margin: 5px;
+    background-color: green;
+    border: 5px purple solid;
+    border-radius: 5px;
+}
+.overlay {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 .score {
     display: block;

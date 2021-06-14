@@ -81,7 +81,7 @@ function playRound(playerChoice = 'rock', computerChoice) {  // Compare computer
    makeElements('div.roll', 'h1', 'round-roll', 'Player Vs. CPU');
 
    makeElements('main', 'div', 'winner');
-   makeElements('div.winner', 'h1', 'round-data', 'Click to Play :)');
+   makeElements('div.winner', 'h1', 'round-data', 'You are a Winner :)');
    makeElements('div.winner', 'h3', 'retry', 'Retry?');
    makeElements('div.winner', 'button', 'yes', 'Yes');
    makeElements('div.winner', 'button', 'no', 'No');

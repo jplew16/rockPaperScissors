@@ -33,13 +33,29 @@ main {
 }
 .winner {
     background-color: burlywood;
-    height: 5em;
     position: fixed;
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
     width: 500px;
     height: 200px;
+    border-radius: 10%;
+    display: block;
+}
+.winner h1 {
+    text-align: center;
+    padding: 40px 0;
+}
+.winner h3 {
+    padding: 0 80px;
+    margin: 0 auto;
+    text-align: center;
+}
+.winner button {
+    display: inline-block;
+    width: 25%;
+    height: 25%;
+    margin: 5px;
 }
 .score {
     display: block;
@@ -72,20 +88,12 @@ main {
     padding: 25px;
     margin: 15px auto;
 }
-main {
-    display: flex;
-    justify-content: center;
-}
 .results {
     width: 25rem;
     height: 25rem;
     margin: 5rem 1rem 1rem 5rem;
     background: rgb(93, 35, 148);
     border: blueviolet 5px solid;
-}
-h1 {
-    text-align: center;
-    margin: 5px;
 }
 .players {
     background-color: brown;

@@ -72,6 +72,35 @@ main {
     padding: 25px;
     margin: 15px auto;
 }
+main {
+    display: flex;
+    justify-content: center;
+}
+.results {
+    width: 25rem;
+    height: 25rem;
+    margin: 5rem 1rem 1rem 5rem;
+    background: rgb(93, 35, 148);
+    border: blueviolet 5px solid;
+}
+h1 {
+    text-align: center;
+    margin: 5px;
+}
+.players {
+    background-color: brown;
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+}
+.players h4 {
+    width: 8em;
+    text-align: center;
+}
+.players p {
+    width: 8em;
+}
+
 .buttons-play {
     margin: 15px 5px;
     border-radius: 15px;
@@ -87,10 +116,17 @@ main {
     color: red;
 }
 p {
+    margin: 5px;
     text-align: center;
     border: 5px black;
     font-size: 2em;
     border-radius: 15px;
+}
+.player-choice {
+    color: blue;
+}
+.computer-choice {
+    color: red;
 }
 h2 {
     color: brown;

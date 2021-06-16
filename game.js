@@ -4,45 +4,57 @@ function computerPlay (computerRoll = 3) {
     (randomNum == 1) ? computerRoll = "Scissors" :
     computerRoll = "Paper";
     return computerRoll;
-} 
-let score = {computer: 0, player: 0};
-let roundNum = 0;
-function keepScore (roundResults) {
-   
-   if (roundResults[2] == 'You Win!') {
+   } 
+   let score = {'player': 0, 'computer': 0};
+   let round = 0;
+   function keepScore (roundResults) {
+   if (roundResults[0] == 'You Win!') {
       score['player'] += 1;
-      addText('div.player p.player-score', score['player']);
    } 
-   else if (roundResults[2] == 'You Lose!') {
+   else if (roundResults[0] == 'You Lose!') {
       score['computer'] += 1;
-      addText('div.computer p.computer-score', score['computer']);
    } 
-   console.log(score);
+   addText('div.player p.player-score', score['player']);
+   addText('div.computer p.computer-score', score['computer']);
+   console.log(roundResults);
    showResults(roundResults);
 }
 function showResults(roundResults) {  // Output the current score and you won, lost, or tied messages
-      addText('div.roll h1.round-roll', `${roundResults[0]} versus ${roundResults[1]}`);
-      addText('h1.round-num', `Round ${roundNum}/5`);
+      addText('div.roll h1.round-roll', `${roundResults[1]} Vs. ${roundResults[2]}`);
+      addText('h1.round-num', `Round ${round}/5`);
 
-      if (score['computer'] + score['player'] == 5) {
-         gameOver(roundResults[4], roundResults[3])
-         return;
+      if (round == 0 || round == 5) {
+         if (score['player'] > score['computer']) {
+            addText('#winner h1', 'You Win!');
+         }
+         else if (score['player'] < score['computer']) {
+            addText('#winner h1', 'You Lose!');
+         }
+         else {
+            addText('#winner h1', 'It\'s a Tie!');
+         }
+         togglePopup();
       }
 }
+
 function playRound(playerChoice = 'rock', computerChoice) {  // Compare computer's and user's choices to declare a winner
    let roundOver = (playerChoice == computerChoice) ? "It\'s a Tie!" :
    (playerChoice == "Paper" && computerChoice == "Rock") ||
    (playerChoice == "Scissors" && computerChoice == "Paper") ||
    (playerChoice == "Rock" && computerChoice == "Scissors") ? "You Win!"  :
    "You Lose!";
-   roundNum++;
-
-   keepScore([playerChoice, computerChoice, roundOver]);
+   round++;
+   keepScore([roundOver, playerChoice, computerChoice]);
+}
+function togglePopup() {
+   let overlay = document.getElementById('winner');
+   let popup = document.getElementById('overlay');
+   overlay.classList.toggle('active');
+   popup.classList.toggle('active');
 }
    function createButtons(idName) {
       const playerButton = document.createElement('button');
       playerButton.id = idName;
-      playerButton.textContent = idName;
       playerButton.classList.toggle('buttons-play');
       return playerButton;
    }
@@ -62,7 +74,6 @@ function playRound(playerChoice = 'rock', computerChoice) {  // Compare computer
       .textContent = text;  
    }
 
-
    let container = document.createElement('main');
    document.body.append(container);
 
@@ -80,12 +91,17 @@ function playRound(playerChoice = 'rock', computerChoice) {  // Compare computer
    makeElements('main', 'div', 'roll');
    makeElements('div.roll', 'h1', 'round-roll', 'Player Vs. CPU');
 
-   makeElements('main', 'div', 'overlay');
-   makeElements('main', 'div', 'winner');
-   makeElements('div.winner', 'h1', 'round-data', 'You are a Winner :)');
-   makeElements('div.winner', 'h3', 'retry', 'Retry?');
-   makeElements('div.winner', 'button', 'yes', 'Yes');
-   makeElements('div.winner', 'button', 'no', 'No');
+   makeElements('main', 'div');
+   const endOverlay = document.querySelector('main div:nth-child(3)');
+   endOverlay.setAttribute('id', 'overlay');
+   makeElements('main', 'div');
+   const endPopup = document.querySelector('main div:nth-child(4)');
+   endPopup.setAttribute('id', 'winner');
+   
+   makeElements('#winner', 'h2', 'game-over', 'Five Round Limit Reached')
+   makeElements('#winner', 'h2', 'thanks', 'Thanks for playing :)')
+   makeElements('#winner', 'h1', 'round-data', 'You are a Winner');
+   makeElements('#winner', 'button', 'retry', 'Retry');
 
 
    makeElements('div.score', 'div', 'computer');
@@ -101,31 +117,42 @@ function playRound(playerChoice = 'rock', computerChoice) {  // Compare computer
    buttonsParent.append(createButtons('Rock'));
    buttonsParent.append(createButtons('Paper'));
    buttonsParent.append(createButtons('Scissors'));
+
+   let rock = document.getElementById('rock');
    
-   /*
-   const currentRoundScore = document.createElement('div');
-   let showTotalScore = `Player Score: ${score['player']} Computer Score: ${score['computer']}`;
-   currentRoundScore.textContent += showTotalScore;
-   roundOutput.appendChild(currentRoundScore); */
    
-   const btns = document.querySelectorAll('button')
+   
+   const btns = document.querySelectorAll('button.buttons-play')
    let sendChoice = function () {    // Send the player's choice through playRound
       playRound(this.id, computerPlay())
    };
    btns.forEach((button) => {
       button.addEventListener('click', sendChoice);
    });
-
-function gameOver(playerScore, computerScore)  {
-   const fifthRound = document.createElement('h2');
-   if (playerScore < computerScore) {
-      fifthRound.textContent = 'You Lose :('
-   } else if (playerScore > computerScore) {
-      fifthRound.textContent = 'You Win :)'
-   }
-   let endScore = document.createElement('p');
-   endScore.textContent += `Final Scores: 
-   Player Score: ${playerScore} Computer Score: ${computerScore}`;
-   roundOutput.appendChild(fifthRound);
-   roundOutput.appendChild(endScore);
-}
+   const retry = document.querySelector('button.retry');
+   retry.addEventListener('click', () => {
+      score['player'] = 0;
+      score['computer'] = 0;
+      round = 0;
+      keepScore([null, 'Player', 'CPU']);
+   });
+   
+   /*function gameOver(playerScore, computerScore)  {
+      const fifthRound = document.createElement('h2');
+      if (playerScore < computerScore) {
+         fifthRound.textContent = 'You Lose :('
+      } else if (playerScore > computerScore) {
+         fifthRound.textContent = 'You Win :)'
+      }
+      let endScore = document.createElement('p');
+      endScore.textContent += `Final Scores: 
+      Player Score: ${playerScore} Computer Score: ${computerScore}`;
+      roundOutput.appendChild(fifthRound);
+      roundOutput.appendChild(endScore); 
+      
+   }*/
+   /*
+   const currentRoundScore = document.createElement('div');
+   let showTotalScore = `Player Score: ${score['player']} Computer Score: ${score['computer']}`;
+   currentRoundScore.textContent += showTotalScore;
+   roundOutput.appendChild(currentRoundScore); */

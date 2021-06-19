@@ -62,9 +62,12 @@ function createButtons(idName) {
    //Create a container for both the image and button
    makeElements('#buttons', 'div', `${idName}-parent`); 
    const buttonsParent = document.querySelector(`#buttons div.${idName}-parent`);
+   
+   //Create and nest image
    makeElements(`#buttons div.${idName}-parent`, 'img');
    const image = document.querySelector(`div.${idName}-parent img`);
    image.setAttribute('src', `${idName}.jpg`);
+
    buttonsParent.append(playerButton)
 }
 function makeElements(appendTo, element, className, text) {
@@ -117,15 +120,22 @@ makeElements('div.score', 'div', 'computer');
 makeElements('div.computer', 'h4', 'computer-text', 'Computer Score:');
 makeElements('div.computer', 'p', 'computer-score', '0');
 
-const buttons = document.createElement('footer');
+const buttons = document.createElement('nav');
 buttons.setAttribute('id','buttons');
 document.body.append(buttons);
 createButtons('Rock');
 createButtons('Paper');
 createButtons('Scissors');
 
-const btns = document.querySelectorAll('button.buttons-play')
-let sendChoice = function () {    // Send the player's choice through playRound
+let buttonsText = document.createElement('aside');
+buttons.append(buttonsText);
+makeElements('aside', 'p', 'Rock', 'Rock');
+makeElements('aside', 'p', 'Paper', 'Paper');
+makeElements('aside', 'p', 'Scissors', 'Scissors');
+
+const btns = document.querySelectorAll('button.buttons-play');
+// Send the player's choice through playRound
+let sendChoice = function () { 
    playRound(this.id, computerPlay())
 };
 btns.forEach((button) => {

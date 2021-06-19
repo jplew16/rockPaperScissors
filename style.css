@@ -78,41 +78,46 @@ main {
 .active {
     display: inline-block !important;
 }
-.score {
+section {
+    width: 40%;
     display: block;
     text-align: center;
-    width: 50%;
     margin: 5% auto;
     height: 5em;
 }
 .player {
     background-color: brown;
-    display: inline-block;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
     line-height: 1.5;
     height: 8em;
-    margin: 10% 0;
-    padding-top: 5px;
+    margin-bottom: 10%;
     width: 100%;
 }
 .computer {
     background-color: rgb(44, 44, 226);
-    display: inline-block;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
     height: 8em;
     line-height: 1.5;
-    padding-top: 5px;
     width: 100%;
-    margin-top: 5%;
+}
+#buttons {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    align-content: space-around;
+    margin: 5% auto;
+    width: 100vw;
 }
 .buttons-play {
     padding: 25px;
     margin: 0 auto;
 }
-#buttons {
-    display: flex; /* flex */
-    justify-content: center;
-}
 #buttons div {
-    margin: 0 5px;
+    margin: 5px 10px;
     border-radius: 15px;
     width: 8em;
     height: 8em;
@@ -135,7 +140,14 @@ main {
     display: block;
     width: 100%;
     border-radius: 15px;
-
+}
+aside {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.Rock {
+    margin: auto 0;
 }
 .results {
     width: 25rem;

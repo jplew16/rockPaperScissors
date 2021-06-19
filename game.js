@@ -1,7 +1,7 @@
 function computerPlay (computerRoll = 3) {
-    let randomNum = Math.floor(Math.random() * computerRoll); 
-    (randomNum == 0) ? computerRoll = "Rock" :
-    (randomNum == 1) ? computerRoll = "Scissors" :
+let randomNum = Math.floor(Math.random() * computerRoll); 
+(randomNum == 0) ? computerRoll = "Rock" :
+(randomNum == 1) ? computerRoll = "Scissors" :
     computerRoll = "Paper";
     return computerRoll;
    } 
@@ -52,107 +52,89 @@ function togglePopup() {
    overlay.classList.toggle('active');
    popup.classList.toggle('active');
 }
-   function createButtons(idName) {
-      const playerButton = document.createElement('button');
-      playerButton.id = idName;
-      playerButton.classList.toggle('buttons-play');
-      return playerButton;
+
+
+function createButtons(idName) {
+   const playerButton = document.createElement('button');
+   playerButton.id = idName;
+   playerButton.classList.toggle('buttons-play');
+   
+   //Create a container for both the image and button
+   makeElements('#buttons', 'div', `${idName}-parent`); 
+   const buttonsParent = document.querySelector(`#buttons div.${idName}-parent`);
+   makeElements(`#buttons div.${idName}-parent`, 'img');
+   const image = document.querySelector(`div.${idName}-parent img`);
+   image.setAttribute('src', `${idName}.jpg`);
+   buttonsParent.append(playerButton)
+}
+function makeElements(appendTo, element, className, text) {
+   let node = document.createElement(element);
+   let parent = document.querySelector(appendTo);
+   parent.append(node);
+   if (className != null) {
+      node.classList.add(className);
    }
-   function makeElements(appendTo, element, className, text) {
-      let node = document.createElement(element);
-      let parent = document.querySelector(appendTo);
-      parent.append(node);
-      if (className != null) {
-         node.classList.add(className);
-      }
-      if (text != null) {
+   if (text != null) {
       addText(`${element}.${className}`, text);
    }
 }
-   function addText(element, text) {
-      document.querySelector(element)
-      .textContent = text;  
-   }
 
-   let container = document.createElement('main');
-   document.body.append(container);
+function addText(element, text) {
+   document.querySelector(element)
+   .textContent = text;  
+}
 
-
-   makeElements('main', 'div', 'round');
-   makeElements('div.round', 'h1', 'round-num', 'Round 0/5');
-
-   let points = document.createElement('div');
-   points.classList.add('score');
-   document.body.append(points);
-   makeElements('div.score', 'div', 'player');
-   makeElements('div.player', 'h4', 'player-text', 'Player Score:')
-   makeElements('div.player', 'p', 'player-score', '0');
-
-   makeElements('main', 'div', 'roll');
-   makeElements('div.roll', 'h1', 'round-roll', 'Player Vs. CPU');
-
-   makeElements('main', 'div');
-   const endOverlay = document.querySelector('main div:nth-child(3)');
-   endOverlay.setAttribute('id', 'overlay');
-   makeElements('main', 'div');
-   const endPopup = document.querySelector('main div:nth-child(4)');
-   endPopup.setAttribute('id', 'winner');
-   
-   makeElements('#winner', 'h2', 'game-over', 'Five Round Limit Reached')
-   makeElements('#winner', 'h2', 'thanks', 'Thanks for playing :)')
-   makeElements('#winner', 'h1', 'round-data', 'You are a Winner');
-   makeElements('#winner', 'button', 'retry', 'Retry');
+let container = document.createElement('main');
+document.body.append(container);
 
 
-   makeElements('div.score', 'div', 'computer');
-   makeElements('div.computer', 'h4', 'computer-text', 'Computer Score:');
-   makeElements('div.computer', 'p', 'computer-score', '0');
+makeElements('main', 'div', 'round');
+makeElements('div.round', 'h1', 'round-num', 'Round 0/5');
 
+makeElements('main', 'div', 'roll');
+makeElements('div.roll', 'h1', 'round-roll', 'Player Vs. CPU');
 
+makeElements('main', 'div');
+const endOverlay = document.querySelector('main div:nth-child(3)');
+endOverlay.setAttribute('id', 'overlay');
+makeElements('main', 'div');
+const endPopup = document.querySelector('main div:nth-child(4)');
+endPopup.setAttribute('id', 'winner');
 
-   let buttonsParent = document.createElement('div');
-   buttonsParent.setAttribute('id', 'buttons');
-   document.body.append(buttonsParent);
+makeElements('#winner', 'h2', 'game-over', 'Five Round Limit Reached')
+makeElements('#winner', 'h2', 'thanks', 'Thanks for playing :)')
+makeElements('#winner', 'h1', 'round-data', 'You are a Winner');
+makeElements('#winner', 'button', 'retry', 'Retry');
 
-   buttonsParent.append(createButtons('Rock'));
-   buttonsParent.append(createButtons('Paper'));
-   buttonsParent.append(createButtons('Scissors'));
+let scoring = document.createElement('section');
+document.body.append(scoring);
 
-   let rock = document.getElementById('rock');
-   
-   
-   
-   const btns = document.querySelectorAll('button.buttons-play')
-   let sendChoice = function () {    // Send the player's choice through playRound
-      playRound(this.id, computerPlay())
-   };
-   btns.forEach((button) => {
-      button.addEventListener('click', sendChoice);
-   });
-   const retry = document.querySelector('button.retry');
-   retry.addEventListener('click', () => {
-      score['player'] = 0;
-      score['computer'] = 0;
-      round = 0;
-      keepScore([null, 'Player', 'CPU']);
-   });
-   
-   /*function gameOver(playerScore, computerScore)  {
-      const fifthRound = document.createElement('h2');
-      if (playerScore < computerScore) {
-         fifthRound.textContent = 'You Lose :('
-      } else if (playerScore > computerScore) {
-         fifthRound.textContent = 'You Win :)'
-      }
-      let endScore = document.createElement('p');
-      endScore.textContent += `Final Scores: 
-      Player Score: ${playerScore} Computer Score: ${computerScore}`;
-      roundOutput.appendChild(fifthRound);
-      roundOutput.appendChild(endScore); 
-      
-   }*/
-   /*
-   const currentRoundScore = document.createElement('div');
-   let showTotalScore = `Player Score: ${score['player']} Computer Score: ${score['computer']}`;
-   currentRoundScore.textContent += showTotalScore;
-   roundOutput.appendChild(currentRoundScore); */
+makeElements('section', 'div', 'score');
+makeElements('div.score', 'div', 'player');
+makeElements('div.player', 'h4', 'player-text', 'Player Score:')
+makeElements('div.player', 'p', 'player-score', '0');
+makeElements('div.score', 'div', 'computer');
+makeElements('div.computer', 'h4', 'computer-text', 'Computer Score:');
+makeElements('div.computer', 'p', 'computer-score', '0');
+
+const buttons = document.createElement('footer');
+buttons.setAttribute('id','buttons');
+document.body.append(buttons);
+createButtons('Rock');
+createButtons('Paper');
+createButtons('Scissors');
+
+const btns = document.querySelectorAll('button.buttons-play')
+let sendChoice = function () {    // Send the player's choice through playRound
+   playRound(this.id, computerPlay())
+};
+btns.forEach((button) => {
+   button.addEventListener('click', sendChoice);
+});
+const retry = document.querySelector('button.retry');
+retry.addEventListener('click', () => {
+   score['player'] = 0;
+   score['computer'] = 0;
+   round = 0;
+   keepScore([null, 'Player', 'CPU']);
+});

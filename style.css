@@ -5,11 +5,14 @@
 }
 body {
     display: flex;
-    justify-content: space-evenly;
+    flex-flow: row wrap;
 }
 main {
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: column;
     margin: 5%;
-    width: 50%;
+    width: 40%;
 }
 .round {
     text-align: center;
@@ -78,33 +81,61 @@ main {
 .score {
     display: block;
     text-align: center;
-    margin: 5%;
     width: 50%;
+    margin: 5% auto;
     height: 5em;
 }
 .player {
     background-color: brown;
     display: inline-block;
     line-height: 1.5;
-    height: 100px;
-    vertical-align: middle;
+    height: 8em;
+    margin: 10% 0;
     padding-top: 5px;
     width: 100%;
 }
 .computer {
     background-color: rgb(44, 44, 226);
     display: inline-block;
-    height: 100px;
+    height: 8em;
     line-height: 1.5;
     padding-top: 5px;
     width: 100%;
     margin-top: 5%;
 }
-#buttons {
-    position: absolute;
-    bottom: 10%;
+.buttons-play {
     padding: 25px;
-    margin: 15px auto;
+    margin: 0 auto;
+}
+#buttons {
+    display: flex; /* flex */
+    justify-content: center;
+}
+#buttons div {
+    margin: 0 5px;
+    border-radius: 15px;
+    width: 8em;
+    height: 8em;
+    background-color: #027e7e;
+    position: relative;
+}
+#buttons div img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+#buttons div button {
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: rgba(0, 0, 0, 0.4);
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 100%;
+    border-radius: 15px;
+
 }
 .results {
     width: 25rem;
@@ -127,14 +158,6 @@ main {
     width: 8em;
 }
 
-.buttons-play {
-    margin: 15px 5px;
-    border-radius: 15px;
-    width: 5em;
-    height: 5em;
-    font-size: 25px;
-    background-color: #027e7e;
-}
 .player-choice {
     color: blue;
 }

@@ -53,7 +53,6 @@ function togglePopup() {
    popup.classList.toggle('active');
 }
 
-
 function createButtons(idName) {
    const playerButton = document.createElement('button');
    playerButton.id = idName;
@@ -67,8 +66,12 @@ function createButtons(idName) {
    makeElements(`#buttons div.${idName}-parent`, 'img');
    const image = document.querySelector(`div.${idName}-parent img`);
    image.setAttribute('src', `${idName}.jpg`);
-
-   buttonsParent.append(playerButton)
+   
+   buttonsParent.append(playerButton);
+   
+   makeElements(`#buttons div.${idName}-parent`, 'p', `${idName}-text`, `${idName}`);
+   
+   
 }
 function makeElements(appendTo, element, className, text) {
    let node = document.createElement(element);
@@ -126,12 +129,6 @@ document.body.append(buttons);
 createButtons('Rock');
 createButtons('Paper');
 createButtons('Scissors');
-
-let buttonsText = document.createElement('aside');
-buttons.append(buttonsText);
-makeElements('aside', 'p', 'Rock', 'Rock');
-makeElements('aside', 'p', 'Paper', 'Paper');
-makeElements('aside', 'p', 'Scissors', 'Scissors');
 
 const btns = document.querySelectorAll('button.buttons-play');
 // Send the player's choice through playRound

@@ -63,9 +63,10 @@ function createButtons(idName) {
    const buttonsParent = document.querySelector(`#buttons div.${idName}-parent`);
    
    //Create and nest image
+   let imageRef = idName.toLowerCase();
    makeElements(`#buttons div.${idName}-parent`, 'img');
    const image = document.querySelector(`div.${idName}-parent img`);
-   image.setAttribute('src', `${idName}.jpg`);
+   image.setAttribute('src', `${imageRef}.jpg`);
    
    buttonsParent.append(playerButton);
    

@@ -71,7 +71,6 @@ function createButtons(idName) {
    
    makeElements(`#buttons div.${idName}-parent`, 'p', `${idName}-text`, `${idName}`);
    
-   
 }
 function makeElements(appendTo, element, className, text) {
    let node = document.createElement(element);

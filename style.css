@@ -4,6 +4,7 @@
     box-sizing: border-box;
 }
 body {
+    background-color: teal;
     display: flex;
     flex-flow: row wrap;
 }
@@ -50,6 +51,7 @@ main {
     padding: 1em;
     margin: 0 4em;
     border: black 5px solid;
+    background-color: teal;
     border-radius: 10px;
 }
 #winner h2 {
@@ -175,15 +177,6 @@ aside {
 .players p {
     width: 8em;
 }
-.score p {
-    color: rgb(23, 151, 23);
-}
-.player-choice {
-    color: blue;
-}
-.computer-choice {
-    color: red;
-}
 #buttons button:hover {
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -194,14 +187,7 @@ p {
     font-size: 2em;
     border-radius: 15px;
 }
-.player-choice {
-    color: blue;
-}
-.computer-choice {
-    color: red;
-}
 h2 {
-    color: green;
     text-align: center;
 }
 h4 {

@@ -7,7 +7,8 @@ let randomNum = Math.floor(Math.random() * computerRoll);
    } 
    let score = {'player': 0, 'computer': 0};
    let round = 0;
-   function keepScore (roundResults) {
+
+function keepScore (roundResults) {
    if (roundResults[0] == 'You Win!') {
       score['player'] += 1;
    } 
@@ -19,9 +20,21 @@ let randomNum = Math.floor(Math.random() * computerRoll);
    console.log(roundResults);
    showResults(roundResults);
 }
+function changeColor(roundEnd) {
+   let roundMessage = document.querySelector('.round-winner');
+   if (roundEnd == 'You Win!') {
+      roundMessage.setAttribute('style', 'color: brown;');
+   } else if (roundEnd == 'You Lose!') {
+      roundMessage.setAttribute('style', 'color: rgb(44, 44, 226);');
+   } else {
+      roundMessage.setAttribute('style', 'color: black;');
+   }
+}
 function showResults(roundResults) {  // Output the current score and you won, lost, or tied messages
       addText('div.roll h1.round-roll', `${roundResults[1]} Vs. ${roundResults[2]}`);
       addText('h1.round-num', `Round ${round}/5`);
+      changeColor(roundResults[0]);
+      addText('.round-winner', roundResults[0]);
 
       if (round == 0 || round == 5) {
          if (score['player'] > score['computer']) {
@@ -96,6 +109,7 @@ document.body.append(container);
 
 makeElements('main', 'div', 'round');
 makeElements('div.round', 'h1', 'round-num', 'Round 0/5');
+makeElements('div.round', 'h1', 'round-winner', 'Round Winner');
 
 makeElements('main', 'div', 'roll');
 makeElements('div.roll', 'h1', 'round-roll', 'Player Vs. CPU');
@@ -143,5 +157,5 @@ retry.addEventListener('click', () => {
    score['player'] = 0;
    score['computer'] = 0;
    round = 0;
-   keepScore([null, 'Player', 'CPU']);
+   keepScore(['Round Winner', 'Player', 'CPU']);
 });
